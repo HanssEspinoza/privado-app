@@ -93,8 +93,8 @@ const DefectListPage = () => {
     title: string,
     description: string,
     status: string,
-    reporterId: number,
-    assigneeId?: number,
+    reporterId: string,
+    assigneeId?: string,
   ) => {
     if (!editingDefect) return;
 
@@ -104,8 +104,8 @@ const DefectListPage = () => {
         title,
         description,
         status,
-        reporterId,
-        assigneeId,
+        (reporterId = reporterId.toString()),
+        (assigneeId = assigneeId.toString()),
       );
       fetchDefects();
       setIsModalOpen(false);
