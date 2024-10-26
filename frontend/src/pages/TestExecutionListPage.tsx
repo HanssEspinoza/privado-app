@@ -67,8 +67,6 @@ const TestExecutionListPage = () => {
   };
 
   const handleUpdateTestExecution = async (
-    testCaseId: number,
-    executedBy: number,
     result: string,
     evidence?: string,
   ) => {
@@ -109,7 +107,7 @@ const TestExecutionListPage = () => {
 
   useEffect(() => {
     fetchTestExecutions();
-  }, [testCaseId]);
+  });
 
   return (
     <div className="min-h-screen">
