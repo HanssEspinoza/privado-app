@@ -133,7 +133,7 @@ const DefectListPage = () => {
   useEffect(() => {
     fetchDefects();
     fetchDevelopers();
-  }, [testCaseId]);
+  });
 
   return (
     <div className="min-h-screen">

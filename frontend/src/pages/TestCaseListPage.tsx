@@ -66,20 +66,11 @@ const TestCaseListPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleUpdateTestCase = async (
-    name: string,
-    expectedResult: string,
-    description?: string,
-  ) => {
+  const handleUpdateTestCase = async (name: string, description?: string) => {
     if (!editingTestCase) return;
 
     try {
-      await updateTestCase(
-        editingTestCase.id,
-        name,
-        expectedResult,
-        description,
-      );
+      await updateTestCase(editingTestCase.id, name, description);
       fetchTestCases();
       setIsModalOpen(false);
       setEditingTestCase(null);
@@ -109,7 +100,7 @@ const TestCaseListPage = () => {
 
   useEffect(() => {
     fetchTestCases();
-  }, [testPlanId]);
+  });
 
   return (
     <div className="min-h-screen">
