@@ -15,13 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 class Server {
-    constructor() {
+    constructor(options) {
         this.app = (0, express_1.default)();
+        const { port = 8080, routes } = options;
+        this.port = port;
+        this.routes = routes;
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.app.listen(3000, () => {
-                console.log("Server is running on http://localhost:3000");
+            this.app.use(this.routes);
+            this.app.listen(this.port, () => {
+                console.log(`Server started on port ${this.port}`);
             });
         });
     }

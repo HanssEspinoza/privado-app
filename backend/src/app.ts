@@ -1,4 +1,5 @@
 import { envs } from "./config";
+import { AppRoutes } from "./routes";
 import { Server } from "./server";
 
 (() => {
@@ -8,5 +9,6 @@ import { Server } from "./server";
 export function main() {
   new Server({
     port: envs.PORT,
+    routes: AppRoutes.routes,
   }).start();
 }
