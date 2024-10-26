@@ -1,36 +1,23 @@
 import { useState } from "react";
-import Cookies from "js-cookie";
 
 interface TestExecutionFormProps {
-  onSubmit: (
-    testCaseId: number,
-    executedBy: number,
-    result: string,
-    evidence?: string,
-  ) => void;
+  onSubmit: (result: string, evidence?: string) => void;
   initialData?: {
-    testCaseId: number;
-    executedBy: number;
     result: string;
     evidence?: string;
   };
-  testCaseId: number;
-  userId: number;
 }
 
 const TestExecutionForm = ({
   onSubmit,
   initialData,
-  testCaseId,
 }: TestExecutionFormProps) => {
-  const userCookie = Cookies.get("user");
-  const executedBy = userCookie ? JSON.parse(userCookie).id : null;
   const [result, setResult] = useState<string>(initialData?.result || "PASSED");
   const [evidence, setEvidence] = useState(initialData?.evidence || "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(testCaseId, Number(executedBy), result, evidence || undefined);
+    onSubmit(result, evidence || undefined);
   };
 
   return (

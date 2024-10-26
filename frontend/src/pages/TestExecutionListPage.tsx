@@ -22,37 +22,33 @@ interface TestExecution {
 
 const TestExecutionListPage = () => {
   const { testCaseId } = useParams<{ testCaseId: string }>();
-  const { user } = useAuth(); // Obtener el usuario actual del contexto de autenticación
+  const { user } = useAuth();
   const [testExecutions, setTestExecutions] = useState<TestExecution[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingExecution, setEditingExecution] =
     useState<TestExecution | null>(null);
 
-  // Obtener la lista de ejecuciones de prueba
   const fetchTestExecutions = async () => {
     try {
       const data = await getTestExecutions();
-      const filteredExecutions = data.filter(
-        (execution) => execution.testCaseId === Number(testCaseId),
+      setTestExecutions(
+        data.filter((exec) => exec.testCaseId === Number(testCaseId)),
       );
-      setTestExecutions(filteredExecutions);
     } catch (error) {
       console.error("Error al obtener ejecuciones de prueba:", error);
     }
   };
 
   const handleCreateTestExecution = async (
-    testCaseId: number,
-    executedBy: number,
     result: string,
     evidence?: string,
   ) => {
     try {
-      await createTestExecution(testCaseId, executedBy, result, evidence);
+      await createTestExecution(Number(testCaseId), user.id, result, evidence);
       fetchTestExecutions();
       setIsModalOpen(false);
       Swal.fire(
-        "Ejecución de prueba creada",
+        "Creado",
         "La ejecución de prueba se creó exitosamente",
         "success",
       );
@@ -78,8 +74,8 @@ const TestExecutionListPage = () => {
       setIsModalOpen(false);
       setEditingExecution(null);
       Swal.fire(
-        "Ejecución de prueba actualizada",
-        "La ejecución de prueba ha sido actualizada",
+        "Actualizado",
+        "La ejecución de prueba fue actualizada",
         "success",
       );
     } catch (error) {
@@ -95,11 +91,7 @@ const TestExecutionListPage = () => {
     try {
       await deleteTestExecution(id);
       fetchTestExecutions();
-      Swal.fire(
-        "Ejecución de prueba eliminada",
-        "La ejecución de prueba ha sido eliminada",
-        "success",
-      );
+      Swal.fire("Eliminada", "La ejecución de prueba fue eliminada", "success");
     } catch (error) {
       Swal.fire("Error", "No se pudo eliminar la ejecución de prueba", "error");
     }
@@ -107,7 +99,7 @@ const TestExecutionListPage = () => {
 
   useEffect(() => {
     fetchTestExecutions();
-  });
+  }, [testCaseId]);
 
   return (
     <div className="min-h-screen">
@@ -134,8 +126,6 @@ const TestExecutionListPage = () => {
                 : handleCreateTestExecution
             }
             initialData={editingExecution || undefined}
-            testCaseId={Number(testCaseId)}
-            userId={user.id}
           />
         </Modal>
 
@@ -166,7 +156,7 @@ const TestExecutionListPage = () => {
                     to={`/test-cases/${testCaseId}/defects`}
                     className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
                   >
-                    Ver Casos de Prueba
+                    Ver Defectos
                   </Link>
                   <button
                     onClick={() => handleEditTestExecution(execution)}
