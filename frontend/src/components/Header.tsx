@@ -14,12 +14,6 @@ const Header = () => {
           <Link to="/projects" className="hover:underline">
             Proyectos
           </Link>
-          <Link to="/test-plans" className="hover:underline">
-            Planes de Prueba
-          </Link>
-          <Link to="/test-cases" className="hover:underline">
-            Casos de Prueba
-          </Link>
           <Link to="/defects" className="hover:underline">
             Defectos
           </Link>

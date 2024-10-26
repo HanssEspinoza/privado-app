@@ -107,7 +107,7 @@ export class DefectController {
         where: { id: Number(id) },
       });
 
-      res.status(204).send();
+      res.status(200).json({ message: "Defecto eliminado exitosamente" });
     } catch (error) {
       next(error);
     }

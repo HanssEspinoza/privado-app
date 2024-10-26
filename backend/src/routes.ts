@@ -5,6 +5,7 @@ import { TestPlanRoutes } from "./testPlan/routes";
 import { TestCaseRoutes } from "./testCase/routes";
 import { TestExecutionRoutes } from "./testExecution/routes";
 import { DefectRoutes } from "./defect/routes";
+import { UserRoutes } from "./users/routes";
 
 export class AppRoutes {
   static get routes(): Router {
@@ -17,6 +18,7 @@ export class AppRoutes {
     router.use("/api/test-cases", TestCaseRoutes.routes);
     router.use("/api/test-executions", TestExecutionRoutes.routes);
     router.use("/api/defects", DefectRoutes.routes);
+    router.use("/api/users", UserRoutes.routes);
 
     return router;
   }

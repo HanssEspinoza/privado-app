@@ -9,7 +9,7 @@ import TestCaseForm from "../components/TestCaseForm";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface TestCase {
   id: number;
@@ -165,6 +165,12 @@ const TestCaseListPage = () => {
                 </p>
                 <p>{testCase.description}</p>
                 <div className="mt-2 space-x-2">
+                  <Link
+                    to={`/test-cases/${testCase.id}/defects`}
+                    className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                  >
+                    Ver Defectos
+                  </Link>
                   <button
                     onClick={() => handleEditTestCase(testCase)}
                     className="px-4 py-2 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
