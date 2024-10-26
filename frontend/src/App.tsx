@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProjectListPage from "./pages/ProjectListPage";
+import TestPlanListPage from "./pages/TestPlanListPage";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { isAuthenticated } = useAuth();
@@ -38,6 +39,10 @@ function App() {
                 <ProjectListPage />
               </PrivateRoute>
             }
+          />
+          <Route
+            path="/projects/:projectId/test-plans"
+            element={<TestPlanListPage />}
           />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

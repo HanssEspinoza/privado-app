@@ -20,12 +20,10 @@ export class TestPlanController {
           project: { connect: { id: projectId } },
         },
       });
-      res
-        .status(201)
-        .json({
-          message: "Plan de pruebas creado exitosamente",
-          testPlan: newTestPlan,
-        });
+      res.status(201).json({
+        message: "Plan de pruebas creado exitosamente",
+        testPlan: newTestPlan,
+      });
     } catch (error) {
       next(error);
     }
@@ -106,7 +104,9 @@ export class TestPlanController {
         where: { id: Number(id) },
       });
 
-      res.status(204).send();
+      res
+        .status(202)
+        .json({ message: "Plan de pruebas eliminado exitosamente" });
     } catch (error) {
       next(error);
     }

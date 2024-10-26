@@ -10,6 +10,7 @@ import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import Header from "../components/Header";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 interface Project {
   id: number;
@@ -134,6 +135,12 @@ const ProjectListPage = () => {
               <h2 className="text-lg font-bold">{project.name}</h2>
               <p>{project.description}</p>
               <div className="mt-2 space-x-2">
+                <Link
+                  to={`/projects/${project.id}/test-plans`}
+                  className="mt-2 px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                >
+                  Ver Planes de Prueba
+                </Link>
                 <button
                   onClick={() => handleEditProject(project)}
                   className="px-4 py-2 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
