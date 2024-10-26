@@ -22,7 +22,6 @@ export const createDefect = async (
   title: string,
   description: string,
   status: string,
-  severity: string,
   reportedBy: number,
   assignedTo?: string,
 ): Promise<Defect> => {
@@ -30,7 +29,6 @@ export const createDefect = async (
     title,
     description,
     status,
-    severity,
     assignedTo,
     testCaseId,
     reportedBy,
