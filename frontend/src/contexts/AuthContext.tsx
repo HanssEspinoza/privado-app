@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface AuthContextType {
   user: any;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -28,12 +30,56 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      setToken(data.token);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Error en login:", error);
+
+      if (response.ok) {
+        setToken(data.token);
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        navigate("/dashboard");
+      } else {
+        throw new Error(data.error || "Error de autenticación");
+      }
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al iniciar sesión",
+        text:
+          error.message ||
+          "Hubo un problema en el inicio de sesión. Verifica tus credenciales e inténtalo de nuevo.",
+        confirmButtonText: "Ok",
+      });
+    }
+  };
+
+  const register = async (email: string, password: string, name: string) => {
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Registro exitoso",
+          text: "Tu cuenta ha sido creada. Ahora puedes iniciar sesión.",
+          confirmButtonText: "Ok",
+        });
+        navigate("/login");
+      } else {
+        throw new Error(data.error || "Error en el registro");
+      }
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al registrarse",
+        text:
+          error.message ||
+          "Hubo un problema al crear tu cuenta. Inténtalo de nuevo.",
+        confirmButtonText: "Ok",
+      });
     }
   };
 
@@ -48,7 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, logout, isAuthenticated }}
+      value={{ user, token, login, register, logout, isAuthenticated }}
     >
       {children}
     </AuthContext.Provider>
