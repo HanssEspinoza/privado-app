@@ -10,14 +10,7 @@ import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import Header from "../components/Header";
 import { Link, useParams } from "react-router-dom";
-
-interface TestCase {
-  id: number;
-  name: string;
-  expectedResult: string;
-  description?: string;
-  testPlanId: number;
-}
+import { TestCase } from "../types";
 
 const TestCaseListPage = () => {
   const { testPlanId } = useParams<{ testPlanId: string }>();
@@ -28,7 +21,7 @@ const TestCaseListPage = () => {
   const fetchTestCases = async () => {
     try {
       const data = await getTestCases();
-      const filteredTestCases = data.filter(
+      const filteredTestCases: TestCase[] = data.filter(
         (testCase) => testCase.testPlanId === Number(testPlanId),
       );
       setTestCases(filteredTestCases);
@@ -100,7 +93,7 @@ const TestCaseListPage = () => {
 
   useEffect(() => {
     fetchTestCases();
-  });
+  }, []);
 
   return (
     <div className="min-h-screen">

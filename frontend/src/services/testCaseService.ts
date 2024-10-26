@@ -1,11 +1,5 @@
+import { TestCase } from "../types";
 import { api } from "./api";
-
-interface TestCase {
-  id: number;
-  title: string;
-  description?: string;
-  testPlanId: number;
-}
 
 export const getTestCases = async (): Promise<TestCase[]> => {
   return api("/test-cases", "GET");
