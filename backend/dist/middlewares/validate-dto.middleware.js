@@ -8,27 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Server = void 0;
-const express_1 = __importDefault(require("express"));
-class Server {
-    constructor(options) {
-        this.app = (0, express_1.default)();
-        const { port = 8080, routes } = options;
-        this.port = port;
-        this.routes = routes;
-    }
-    start() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.app.use(express_1.default.json());
-            this.app.use(this.routes);
-            this.app.listen(this.port, () => {
-                console.log(`Server started on port ${this.port}`);
-            });
-        });
-    }
+exports.validateDTO = validateDTO;
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+function validateDTO(dtoClass) {
+    return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        const dtoInstance = (0, class_transformer_1.plainToInstance)(dtoClass, req.body);
+        const errors = yield (0, class_validator_1.validate)(dtoInstance);
+        if (errors.length > 0) {
+            const messages = errors.map((error) => Object.values(error.constraints || {}).join(", "));
+            res.status(400).json({ errors: messages });
+            return;
+        }
+        next();
+    });
 }
-exports.Server = Server;
