@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ProjectFormProps {
   onSubmit: (name: string, description?: string) => void;
@@ -10,6 +10,13 @@ export const ProjectForm = ({ onSubmit, initialData }: ProjectFormProps) => {
   const [description, setDescription] = useState(
     initialData?.description || "",
   );
+
+  useEffect(() => {
+    if (initialData) {
+      setName(initialData.name);
+      setDescription(initialData.description || "");
+    }
+  }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,9 +51,9 @@ export const ProjectForm = ({ onSubmit, initialData }: ProjectFormProps) => {
       </div>
       <button
         type="submit"
-        className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 focus:outline-none"
+        className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
       >
-        Guardar Proyecto
+        {initialData ? "Actualizar Proyecto" : "Crear Proyecto"}
       </button>
     </form>
   );
