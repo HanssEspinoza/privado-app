@@ -9,7 +9,7 @@ import TestExecutionForm from "../components/TestExecutionForm";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 interface TestExecution {
@@ -164,6 +164,12 @@ const TestExecutionListPage = () => {
                   <strong>Ejecutado por:</strong> {execution.executedBy}
                 </p>
                 <div className="mt-2 space-x-2">
+                  <Link
+                    to={`/test-cases/${testCaseId}/defects`}
+                    className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                  >
+                    Ver Casos de Prueba
+                  </Link>
                   <button
                     onClick={() => handleEditTestExecution(execution)}
                     className="px-4 py-2 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
