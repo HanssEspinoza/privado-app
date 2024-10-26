@@ -9,7 +9,7 @@ import TestPlanForm from "../components/TestPlanForm";
 import Modal from "../components/Modal";
 import Swal from "sweetalert2";
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface TestPlan {
   id: number;
@@ -142,6 +142,12 @@ const TestPlanListPage = () => {
                 <h2 className="text-lg font-bold">{testPlan.name}</h2>
                 <p>{testPlan.description}</p>
                 <div className="mt-2 space-x-2">
+                  <Link
+                    to={`/test-plans/${testPlan.id}/test-cases`}
+                    className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                  >
+                    Ver Casos de Prueba
+                  </Link>
                   <button
                     onClick={() => handleEditTestPlan(testPlan)}
                     className="px-4 py-2 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"

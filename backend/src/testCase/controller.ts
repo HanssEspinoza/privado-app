@@ -21,12 +21,10 @@ export class TestCaseController {
           testPlan: { connect: { id: testPlanId } },
         },
       });
-      res
-        .status(201)
-        .json({
-          message: "Caso de prueba creado exitosamente",
-          testCase: newTestCase,
-        });
+      res.status(201).json({
+        message: "Caso de prueba creado exitosamente",
+        testCase: newTestCase,
+      });
     } catch (error) {
       next(error);
     }
@@ -107,7 +105,9 @@ export class TestCaseController {
         where: { id: Number(id) },
       });
 
-      res.status(204).send();
+      res
+        .status(200)
+        .json({ message: "Caso de prueba eliminado exitosamente" });
     } catch (error) {
       next(error);
     }
