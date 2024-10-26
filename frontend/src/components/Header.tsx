@@ -14,9 +14,6 @@ const Header = () => {
           <Link to="/projects" className="hover:underline">
             Proyectos
           </Link>
-          <Link to="/defects" className="hover:underline">
-            Defectos
-          </Link>
         </nav>
         <button
           onClick={logout}

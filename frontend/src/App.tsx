@@ -13,6 +13,7 @@ import ProjectListPage from "./pages/ProjectListPage";
 import TestPlanListPage from "./pages/TestPlanListPage";
 import TestCaseListPage from "./pages/TestCaseListPage";
 import DefectListPage from "./pages/DefectListPage";
+import TestExecutionListPage from "./pages/TestExecutionListPage";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { isAuthenticated } = useAuth();
@@ -49,6 +50,10 @@ function App() {
           <Route
             path="/test-plans/:testPlanId/test-cases"
             element={<TestCaseListPage />}
+          />
+          <Route
+            path="/test-cases/:testCaseId/test-executions"
+            element={<TestExecutionListPage />}
           />
           <Route
             path="/test-cases/:testCaseId/defects"

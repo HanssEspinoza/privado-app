@@ -166,10 +166,10 @@ const TestCaseListPage = () => {
                 <p>{testCase.description}</p>
                 <div className="mt-2 space-x-2">
                   <Link
-                    to={`/test-cases/${testCase.id}/defects`}
+                    to={`/test-cases/${testCase.id}/test-executions`}
                     className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
                   >
-                    Ver Defectos
+                    Ver Ejecuciones de Prueba
                   </Link>
                   <button
                     onClick={() => handleEditTestCase(testCase)}
