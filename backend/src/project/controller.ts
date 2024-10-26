@@ -98,7 +98,7 @@ export class ProjectController {
         where: { id: Number(id) },
       });
 
-      res.status(204).send();
+      res.status(200).json({ message: "Proyecto eliminado exitosamente" });
     } catch (error) {
       next(error);
     }

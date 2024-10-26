@@ -1,6 +1,13 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 interface AuthContextType {
   user: any;
@@ -17,9 +24,12 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token"),
+    Cookies.get("token") || null,
   );
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(() => {
+    const userCookie = Cookies.get("user");
+    return userCookie ? JSON.parse(userCookie) : null;
+  });
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
@@ -34,7 +44,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (response.ok) {
         setToken(data.token);
         setUser(data.user);
-        localStorage.setItem("token", data.token);
+
+        // Guardar el token y los datos del usuario en cookies
+        Cookies.set("token", data.token, { expires: 1 }); // Expira en 1 día
+        Cookies.set("user", JSON.stringify(data.user), { expires: 1 });
+
         navigate("/dashboard");
       } else {
         throw new Error(data.error || "Error de autenticación");
@@ -86,11 +100,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem("token");
+
+    // Eliminar el token y los datos del usuario de las cookies
+    Cookies.remove("token");
+    Cookies.remove("user");
+
     navigate("/login");
   };
 
   const isAuthenticated = !!token;
+
+  useEffect(() => {
+    // Cargar el token y los datos de usuario desde las cookies si están disponibles
+    const storedToken = Cookies.get("token");
+    const storedUser = Cookies.get("user");
+
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

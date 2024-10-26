@@ -64,7 +64,16 @@ export class AuthController {
         expiresIn: "1h",
       });
 
-      res.json({ message: "Inicio de sesión exitoso", token });
+      res.json({
+        message: "Inicio de sesión exitoso",
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
+      });
     } catch (error) {
       res.status(500).json({ error: "Error en el inicio de sesión" });
     }
