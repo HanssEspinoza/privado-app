@@ -6,7 +6,7 @@ interface Defect {
   description?: string;
   status: string;
   severity: string;
-  assignedTo?: string;
+  assignedTo?: number;
   testCaseId: number;
   reporterId: number;
 }
@@ -23,7 +23,7 @@ export const createDefect = async (
   description: string,
   status: string,
   reportedBy: number,
-  assignedTo?: string,
+  assignedTo?: number,
 ): Promise<Defect> => {
   return api("/defects", "POST", {
     title,
@@ -41,14 +41,12 @@ export const updateDefect = async (
   title: string,
   description: string,
   status: string,
-  severity: string,
-  assignedTo?: string,
+  assignedTo?: number,
 ): Promise<Defect> => {
   return api(`/defects/${id}`, "PUT", {
     title,
     description,
     status,
-    severity,
     assignedTo,
   });
 };

@@ -10,8 +10,8 @@ interface DefectFormProps {
   onSubmit: (
     title: string,
     description: string,
-    status: string,
-    reporterId: number,
+    status?: string,
+    reporterId?: number,
     assigneeId?: number,
   ) => void;
   initialData?: {
@@ -49,7 +49,13 @@ const DefectForm = ({ onSubmit, initialData, developers }: DefectFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (reportedBy) {
-      onSubmit(title, description, status, reportedBy, assigneeId || undefined);
+      onSubmit(
+        title,
+        description,
+        status,
+        reportedBy,
+        assigneeId ? Number(assigneeId) : undefined,
+      );
       setTitle("");
       setDescription("");
       setStatus("OPEN");

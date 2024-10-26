@@ -65,7 +65,7 @@ const DefectListPage = () => {
     description: string,
     status: string,
     reporterId: number,
-    assigneeId?: string,
+    assigneeId?: number,
   ) => {
     try {
       await createDefect(
@@ -74,7 +74,7 @@ const DefectListPage = () => {
         description,
         status,
         reporterId,
-        (assigneeId = assigneeId.toString()),
+        assigneeId,
       );
       fetchDefects();
       setIsModalOpen(false);
@@ -93,8 +93,7 @@ const DefectListPage = () => {
     title: string,
     description: string,
     status: string,
-    reporterId: string,
-    assigneeId?: string,
+    assigneeId?: number,
   ) => {
     if (!editingDefect) return;
 
@@ -104,8 +103,7 @@ const DefectListPage = () => {
         title,
         description,
         status,
-        (reporterId = reporterId.toString()),
-        (assigneeId = assigneeId.toString()),
+        assigneeId,
       );
       fetchDefects();
       setIsModalOpen(false);
